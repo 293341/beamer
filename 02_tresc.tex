@@ -1,22 +1,48 @@
-\section{Rozdział główny}
+\section{Mechanika działania}
 
-\begin{frame}{Główna treść - definicje}
-    \begin{block}{Ważna definicja}
-        Podział na pliki (ang. \textit{splitting}) pozwala utrzymać porządek w kodzie źródłowym, zwłaszcza gdy prezentacja ma kilkadziesiąt slajdów.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Główna treść - wyliczenia}
-    Przykładowa lista numerowana w głównym rozdziale:
-    \begin{enumerate}
-        \item Punkt pierwszy.
-        \item Punkt drugi.
-        \item Punkt trzeci.
-    \end{enumerate}
+\begin{frame}{Tokenizacja – jak komputer widzi tekst?}
+    Modele nie rozumieją słów jako takich. Tekst jest zamieniany na liczby zwane \textbf{tokenami}.
     
     \vspace{0.5cm}
-    Przykładowe równanie:
+    \begin{exampleblock}{Przykład tokenizacji}
+        Zdanie: \texttt{"Lubię PWr"}
+        \begin{itemize}
+            \item "Lubię" $\rightarrow$ [4521]
+            \item "PWr" $\rightarrow$ [982, 101]
+        \end{itemize}
+    \end{exampleblock}
+    
+    Dzięki temu operujemy na wektorach matematycznych, a nie na ciągach znaków.
+\end{frame}
+
+\begin{frame}{Prawdopodobieństwo warunkowe}
+    Działanie modelu opiera się na statystyce. Celem jest obliczenie prawdopodobieństwa wystąpienia kolejnego tokenu $w_t$ na podstawie poprzednich.
+    
+    \begin{block}{Wzór na predykcję}
+        Prawdopodobieństwo ciągu słów $W = (w_1, w_2, ..., w_n)$ wyraża się wzorem:
+        \begin{equation}
+            P(W) = \prod_{i=1}^{n} P(w_i | w_1, ..., w_{i-1})
+        \end{equation}
+    \end{block}
+    
+    Gdzie:
+    \begin{itemize}
+        \item $w_i$ – aktualne słowo (token).
+        \item $w_1, ..., w_{i-1}$ – kontekst (historia rozmowy).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Architektura Transformer}
+    Kluczowym elementem nowoczesnych modeli jest mechanizm \textbf{Attention} (Uwaga).
+    
+    \begin{itemize}
+        \item Pozwala modelowi skupić się na ważnych słowach w zdaniu, niezależnie od ich odległości.
+        \item Wzór na Attention (Scaled Dot-Product):
+    \end{itemize}
+
     \begin{equation}
-        a^2 + b^2 = c^2
+        \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
     \end{equation}
+    
+    \footnotesize{Gdzie $Q$ to zapytanie (Query), $K$ to klucz (Key), a $V$ to wartość (Value).}
 \end{frame}
